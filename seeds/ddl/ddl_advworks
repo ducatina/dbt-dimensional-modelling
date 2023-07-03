@@ -1,0 +1,169 @@
+CREATE TABLE date (
+  date_day date,
+  prior_date_day date,
+  next_date_day date,
+  prior_year_date_day date,
+  prior_year_over_year_date_day date,
+  day_of_week integer,
+  day_of_week_name varchar,
+  day_of_month integer,
+  day_of_year integer
+);
+
+CREATE TABLE stateprovince (
+  stateprovinceid integer,
+  countryregioncode varchar,
+  modifieddate timestamp,
+  rowguid varchar,
+  name varchar,
+  territoryid integer,
+  isonlystateprovinceflag boolean,
+  stateprovincecode varchar
+);
+
+CREATE OR REPLACE TABLE person (
+  businessentityid INTEGER,
+  title VARCHAR,
+  firstname VARCHAR,
+  middlename VARCHAR,
+  lastname VARCHAR,
+  persontype VARCHAR,
+  namestyle BOOLEAN,
+  suffix VARCHAR,
+  modifieddate TIMESTAMP,
+  rowguid VARCHAR,
+  emailpromotion INTEGER
+);
+
+CREATE TABLE countryregion (
+  countryregioncode VARCHAR,
+  modifieddate TIMESTAMP,
+  name VARCHAR
+);
+
+
+CREATE TABLE ADDRESS (
+    addressid INT,
+    addressline1 VARCHAR(100),
+    addressline2 VARCHAR(100),
+    city VARCHAR(100),
+    stateprovinceid INT,
+    postalcode VARCHAR(20),
+    spatiallocation VARCHAR(200),
+    rowguid STRING,
+    modifieddate TIMESTAMP
+);
+
+
+CREATE TABLE productsubcategory (
+  productsubcategoryid INTEGER,
+  productcategoryid INTEGER,
+  name VARCHAR,
+  modifieddate TIMESTAMP
+);
+
+CREATE TABLE productcategory (
+  productcategoryid INTEGER,
+  name VARCHAR,
+  modifieddate TIMESTAMP
+);
+
+CREATE TABLE product (
+  productid INTEGER,
+  name VARCHAR,
+  safetystocklevel SMALLINT,
+  finishedgoodsflag BOOLEAN,
+  class VARCHAR,
+  makeflag BOOLEAN,
+  productnumber VARCHAR,
+  reorderpoint SMALLINT,
+  modifieddate TIMESTAMP,
+  rowguid VARCHAR,
+  productmodelid INTEGER,
+  weightunitmeasurecode VARCHAR,
+  standardcost NUMERIC,
+  productsubcategoryid INTEGER,
+  listprice NUMERIC,
+  daystomanufacture INTEGER,
+  productline VARCHAR,
+  color VARCHAR,
+  sellstartdate TIMESTAMP,
+  weight NUMERIC
+);
+
+CREATE TABLE store (
+  businessentityid INTEGER,
+  storename VARCHAR,
+  salespersonid INTEGER,
+  modifieddate TIMESTAMP
+);
+
+
+CREATE TABLE salesreason (
+  salesreasonid INTEGER,
+  name VARCHAR,
+  reasontype VARCHAR,
+  modifieddate TIMESTAMP
+);
+
+CREATE TABLE salesorderheadersalesreason (
+  salesorderid INTEGER,
+  modifieddate TIMESTAMP,
+  salesreasonid INTEGER
+);
+
+CREATE TABLE salesorderheader (
+  salesorderid INTEGER,
+  shipmethodid INTEGER,
+  billtoaddressid INTEGER,
+  modifieddate TIMESTAMP,
+  rowguid VARCHAR,
+  taxamt NUMERIC,
+  shiptoaddressid INTEGER,
+  onlineorderflag BOOLEAN,
+  territoryid INTEGER,
+  status SMALLINT,
+  orderdate TIMESTAMP,
+  creditcardapprovalcode VARCHAR,
+  subtotal NUMERIC,
+  creditcardid INTEGER,
+  currencyrateid INTEGER,
+  revisionnumber SMALLINT,
+  freight NUMERIC,
+  duedate TIMESTAMP,
+  totaldue NUMERIC,
+  customerid INTEGER,
+  salespersonid INTEGER,
+  shipdate TIMESTAMP,
+  accountnumber VARCHAR
+);
+
+
+CREATE TABLE salesorderdetail (
+  salesorderid INTEGER,
+  orderqty SMALLINT,
+  salesorderdetailid INTEGER,
+  unitprice NUMERIC,
+  specialofferid INTEGER,
+  modifieddate TIMESTAMP,
+  rowguid VARCHAR,
+  productid INTEGER,
+  unitpricediscount NUMERIC
+);
+
+CREATE TABLE customer (
+  customerid INTEGER,
+  personid INTEGER,
+  storeid INTEGER,
+  territoryid INTEGER
+);
+
+CREATE TABLE creditcard (
+  creditcardid INTEGER,
+  cardtype VARCHAR,
+  expyear SMALLINT,
+  modifieddate TIMESTAMP,
+  expmonth SMALLINT,
+  cardnumber VARCHAR
+);
+

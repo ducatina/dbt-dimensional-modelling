@@ -2,21 +2,21 @@ version: 2
 
 models:
   - name: dim_product
+    config:
+      meta:
+        surrogate_key: true
     columns:
-      - name: product_key 
-        description: The surrogate key of the product
-        config:
-          meta:
-            surrogate_key: true
+      - name: product_key
+        description: The surrogate key of the product 
         tests:
           - not_null
           - unique
-      - name: productid 
+      - name: productid
         description: The natural key of the product
         tests:
           - not_null
           - unique
-      - name: product_name 
+      - name: product_name
         description: The product name
         tests:
-          - not_null 
+          - not_null

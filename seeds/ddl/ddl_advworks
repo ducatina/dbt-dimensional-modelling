@@ -167,3 +167,6 @@ CREATE TABLE creditcard (
   cardnumber VARCHAR
 );
 
+CREATE SEQUENCE dim_product_seq 
+  START = 1
+  INCREMENT = 1;

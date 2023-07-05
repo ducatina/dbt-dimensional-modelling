@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fct_sales
+  - name: fct_sales_sh
     columns:
 
       - name: sales_key
@@ -30,17 +30,17 @@ models:
         tests:
           - not_null 
       
-      - name: address_key
+      - name: ship_address_key
         description: The foreign key of the shipping address
         tests:
           - not_null
       
       - name: creditcard_key
         description: The foreign key of the creditcard. If no creditcard exists, it was assumed that purchase was made in cash.
-        tests:
+        test:
           - not_null
 
-      - name: date_key
+      - name: order_date_key
         description: The foreign key of the order date
         tests:
           - not_null 
@@ -61,10 +61,4 @@ models:
           - not_null
 
       - name: revenue
-        description: The revenue obtained by multiplying unitprice and orderqty 
-
-    constraints:
-        - { "foreign_key": "customer_key", "table": "dim_customer", "column": "customer_key" }
-        - { "foreign_key": "product_key", "table": "dim_product", "column": "product_key" }
-...
-
+        description: The revenue obtained by multiplying unitprice and ord

@@ -21,17 +21,23 @@ stg_salesorderdetail as (
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(['stg_salesorderdetail.salesorderid', 'salesorderdetailid']) }} as sales_key,
-    {{ dbt_utils.generate_surrogate_key(['productid']) }} as product_key,
-    {{ dbt_utils.generate_surrogate_key(['customerid']) }} as customer_key,
-    {{ dbt_utils.generate_surrogate_key(['creditcardid']) }} as creditcard_key,
-    {{ dbt_utils.generate_surrogate_key(['shiptoaddressid']) }} as ship_address_key,
-    {{ dbt_utils.generate_surrogate_key(['order_status']) }} as order_status_key,
-    {{ dbt_utils.generate_surrogate_key(['orderdate']) }} as order_date_key,
-    stg_salesorderdetail.salesorderid,
-    stg_salesorderdetail.salesorderdetailid,
-    stg_salesorderdetail.unitprice,
-    stg_salesorderdetail.orderqty,
-    stg_salesorderdetail.revenue
-from stg_salesorderdetail
-inner join stg_salesorderheader on stg_salesorderdetail.salesorderid = stg_salesorderheader.salesorderid
+    {{ increment_sequence() }} as sales_key,
+    product_key,
+    customer_key,
+    date_key,
+    creditcard_key,
+    address_key,
+    order_status_key,
+    fct.salesorderid,
+    fct.salesorderdetailid,
+    fct.unitprice,
+    fct.orderqty,
+    fct.revenue
+from stg_salesorderdetail as fct
+inner join stg_salesorderheader on fct.salesorderid = stg_salesorderheader.salesorderid
+inner JOIN dim_product ON fct.productid = dim_product.productid
+inner JOIN dim_customer ON stg_salesorderheader.customerid = dim_customer.customerid
+inner JOIN dim_date ON stg_salesorderheader.orderdate = dim_date.date_day
+inner JOIN dim_credit_card ON stg_salesorderheader.creditcardid = dim_credit_card.creditcardid
+inner JOIN dim_order_status ON stg_salesorderheader.order_status = dim_order_status.order_status
+inner JOIN dim_address ON stg_salesorderheader.shiptoaddressid = dim_address.addressid

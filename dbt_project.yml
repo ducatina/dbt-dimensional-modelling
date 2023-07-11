@@ -34,5 +34,5 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   Analytics:
     # Applies to all files under models/example/
-       stg:
+       marts:
        +materialized: table

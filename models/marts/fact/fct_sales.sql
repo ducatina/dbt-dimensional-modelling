@@ -1,3 +1,9 @@
+{% set create_sequence_query %}
+CREATE SCHEMA IF NOT EXISTS dbt_dmdemo;
+CREATE SEQUENCE IF NOT EXISTS dbt_dmdemo.{{ this.name }}_seq;
+{% endset %}
+{% do run_query(create_sequence_query) %}
+
 with stg_salesorderheader as (
     select
         salesorderid,
@@ -34,10 +40,10 @@ select
     fct.orderqty,
     fct.revenue
 from stg_salesorderdetail as fct
-inner join stg_salesorderheader on fct.salesorderid = stg_salesorderheader.salesorderid
-inner JOIN dim_product ON fct.productid = dim_product.productid
-inner JOIN dim_customer ON stg_salesorderheader.customerid = dim_customer.customerid
-inner JOIN dim_date ON stg_salesorderheader.orderdate = dim_date.date_day
-inner JOIN dim_credit_card ON stg_salesorderheader.creditcardid = dim_credit_card.creditcardid
-inner JOIN dim_order_status ON stg_salesorderheader.order_status = dim_order_status.order_status
-inner JOIN dim_address ON stg_salesorderheader.shiptoaddressid = dim_address.addressid
+JOIN stg_salesorderheader on fct.salesorderid = stg_salesorderheader.salesorderid
+JOIN dim_product ON fct.productid = dim_product.productid
+JOIN dim_customer ON stg_salesorderheader.customerid = dim_customer.customerid
+JOIN dim_date ON stg_salesorderheader.orderdate = dim_date.date_day
+JOIN dim_credit_card ON stg_salesorderheader.creditcardid = dim_credit_card.creditcardid
+JOIN dim_order_status ON stg_salesorderheader.order_status = dim_order_status.order_status
+JOIN dim_address ON stg_salesorderheader.shiptoaddressid = dim_address.addressid

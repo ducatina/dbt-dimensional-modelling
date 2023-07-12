@@ -1,3 +1,9 @@
+{% set create_sequence_query %}
+CREATE SCHEMA IF NOT EXISTS dbt_dmdemo;
+CREATE SEQUENCE IF NOT EXISTS dbt_dmdemo.{{ this.name }}_seq;
+{% endset %}
+{% do run_query(create_sequence_query) %}
+
 with stg_product as (
     select *
     from {{ ref('product') }}
